@@ -140,6 +140,8 @@ img {
   display: flex;
   align-items: center;
   list-style: none;
+  /* border-top-right-radius: 3rem;
+  border-bottom-right-radius: 3rem; */
 }
 
 .nav__item {
