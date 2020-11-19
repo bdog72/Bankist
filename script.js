@@ -9,6 +9,13 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+const nav = document.querySelector('.nav');
+const tabs = document.querySelectorAll('.operations__tab');
+
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+///////////////////////////////////////////////
 // Modal window
 const openModal = function (e) {
   e.preventDefault();
@@ -33,7 +40,9 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+///////////////////////////////////////////////
 
+///////////////////////////////////////////////
 // Scrolling
 btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect();
@@ -46,9 +55,10 @@ btnScrollTo.addEventListener('click', function (e) {
 
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+///////////////////////////////////////////////
 
+///////////////////////////////////////////////
 // Page Navigation
-
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -57,14 +67,69 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
+///////////////////////////////////////////////
 
-// /////////////////////////////////////////////
-// /////////////////////////////////////////////
-// /////////////////////////////////////////////
-// /////////////////////////////////////////////
-// /////////////////////////////////////////////
-// /////////////////////////////////////////////
-// /////////////////////////////////////////////
+///////////////////////////////////////////////
+// Tabbed Component
+tabsContainer.addEventListener('click', e => {
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard Clause
+  if (!clicked) return;
+
+  // Remove Active Classes
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // Active Tab
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content Area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// Menu Fade Animation
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) {
+        el.style.opacity = this;
+      } else {
+        logo.style.opacity = this;
+      }
+    });
+  }
+};
+
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// Sticky Navigation
+
+const initialCoords = section1.getBoundingClientRect();
+
+window.addEventListener('scroll', function (e) {
+  if (window.scrollY > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 
 // const randomC = () => {
 //   const a = Math.floor(Math.random() * 255);
@@ -101,23 +166,5 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 //   this.style.backgroundColor = randomColor();
 //   console.log(`NAV`, e.target);
 // });
-
-// /////////////////////////////////////////////
-
-// const h1 = document.querySelector('h1');
-
-// const alertH1 = function (e) {
-//   alert('mouse enter event');
-// };
-
-// h1.addEventListener('mouseenter', alertH1);
-
-// setTimeout(() => {
-//   h1.removeEventListener('mouseenter', alertH1);
-// }, 3000);
-
-// h1.onmouseenter = e => {
-//   alert('mouse enter event arrow');
-// };
 
 // /////////////////////////////////////////////
